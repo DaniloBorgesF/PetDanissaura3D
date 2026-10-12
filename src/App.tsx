@@ -17,6 +17,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ImagemSite from './components/ImagemSite';
+import StatusAtualizacao from './components/StatusAtualizacao';
 import {
   heroImage,
   aboutImage,
@@ -29,6 +30,7 @@ import {
   gerarLinkWhatsApp,
   mensagensWhatsApp,
 } from './config/env';
+import { ANO_ATUAL } from './config/versao';
 
 // ============================================================
 // COMPONENTES AUXILIARES
@@ -244,7 +246,7 @@ function Navbar() {
             {/* Footer */}
             <div className="px-5 pb-5 text-center">
               <p className="text-brown-light/50 text-xs">
-                © 2024 {dadosNegocio.nome}
+                © {ANO_ATUAL} {dadosNegocio.nome}
               </p>
             </div>
           </div>
@@ -755,7 +757,7 @@ function Rodape() {
           </div>
         </div>
         <div className="border-t border-white/10 pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/50 text-xs sm:text-sm text-center sm:text-left">© 2024 {dadosNegocio.nome}. Todos os direitos reservados.</p>
+          <p className="text-white/50 text-xs sm:text-sm text-center sm:text-left">© {ANO_ATUAL} {dadosNegocio.nome}. Todos os direitos reservados.</p>
           <div className="flex gap-3 sm:gap-4">
             <a href={contato.instagram.link} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-terracotta flex items-center justify-center transition-colors" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
             <a href={gerarLinkWhatsApp(mensagensWhatsApp.saudacao)} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-whatsapp flex items-center justify-center transition-colors" aria-label="WhatsApp"><i className="fab fa-whatsapp"></i></a>
@@ -782,6 +784,7 @@ export default function App() {
       <Depoimentos />
       <FAQ />
       <CTAFinal />
+      <StatusAtualizacao />
       <Rodape />
       <BotaoFlutuanteWhatsApp />
     </div>
