@@ -266,6 +266,7 @@ function Hero() {
         <ImagemSite
           src={heroImage.src}
           alt={heroImage.alt}
+          variant="hero"
           className="w-full h-full"
           loading="eager"
         />
@@ -332,8 +333,8 @@ function Sobre() {
               <ImagemSite
                 src={aboutImage.src}
                 alt={aboutImage.alt}
+                variant="portrait"
                 className="w-full"
-                aspectRatio="4/5"
               />
             </div>
             <div className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 w-full h-full border-2 border-terracotta/30 rounded-2xl -z-10"></div>
@@ -418,11 +419,12 @@ function Servicos() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {servicos.map((servico, indice) => (
             <div key={indice} className="card-hover bg-cream rounded-2xl overflow-hidden shadow-lg group">
-              <div className="relative h-56 sm:h-64">
+              <div className="relative">
                 <ImagemSite
                   src={servico.imagem.src}
                   alt={servico.imagem.alt}
-                  className="w-full h-full"
+                  variant="service"
+                  className="w-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent flex items-end p-5">
                   <div className="bg-white/90 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center">
@@ -489,7 +491,8 @@ function Galeria() {
               <ImagemSite
                 src={imagem.src}
                 alt={imagem.alt}
-                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : 'h-36 sm:h-48 md:h-56'}`}
+                variant="gallery"
+                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : ''}`}
               />
               <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/40 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75 text-center">
@@ -510,7 +513,13 @@ function Galeria() {
             <button onClick={() => setImagemSelecionada(null)} className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2" aria-label="Fechar">
               <i className="fas fa-times"></i>
             </button>
-            <ImagemSite src={imagemSelecionada} alt="Trabalho ampliado" className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" loading="eager" />
+            <ImagemSite 
+              src={imagemSelecionada} 
+              alt="Trabalho ampliado" 
+              variant="landscape"
+              className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" 
+              loading="eager" 
+            />
             <div className="mt-4 text-center">
               <BotaoWhatsApp mensagem={mensagensWhatsApp.galeriaSimilar}>
                 <i className="fab fa-whatsapp"></i>

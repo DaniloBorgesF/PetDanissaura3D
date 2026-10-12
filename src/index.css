@@ -365,6 +365,27 @@ figure, picture {
   line-height: 0;
 }
 
+/* Melhorias para imagens de pets */
+.aspect-square img,
+.aspect-\[4\/5\] img,
+.aspect-\[3\/4\] img,
+.aspect-\[16\/9\] img,
+.aspect-\[4\/3\] img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Zoom suave em hover para galeria */
+.group:hover img {
+  transform: scale(1.05);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Transição suave para todas as imagens */
+img {
+  transition: opacity 0.3s ease-in-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ============================================================
    CORREÇÕES DE TIPOGRAFIA - Texto fora do encaixe
    ============================================================ */
