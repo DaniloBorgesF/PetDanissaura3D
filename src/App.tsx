@@ -17,6 +17,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ImagemSite from './components/ImagemSite';
+import StatusAtualizacao from './components/StatusAtualizacao';
 import {
   heroImage,
   aboutImage,
@@ -29,6 +30,7 @@ import {
   gerarLinkWhatsApp,
   mensagensWhatsApp,
 } from './config/env';
+import { ANO_ATUAL } from './config/versao';
 
 // ============================================================
 // COMPONENTES AUXILIARES
@@ -244,7 +246,7 @@ function Navbar() {
             {/* Footer */}
             <div className="px-5 pb-5 text-center">
               <p className="text-brown-light/50 text-xs">
-                © 2024 {dadosNegocio.nome}
+                © {ANO_ATUAL} {dadosNegocio.nome}
               </p>
             </div>
           </div>
@@ -266,6 +268,7 @@ function Hero() {
         <ImagemSite
           src={heroImage.src}
           alt={heroImage.alt}
+          variant="hero"
           className="w-full h-full"
           loading="eager"
         />
@@ -332,8 +335,8 @@ function Sobre() {
               <ImagemSite
                 src={aboutImage.src}
                 alt={aboutImage.alt}
+                variant="portrait"
                 className="w-full"
-                aspectRatio="4/5"
               />
             </div>
             <div className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 w-full h-full border-2 border-terracotta/30 rounded-2xl -z-10"></div>
@@ -418,11 +421,12 @@ function Servicos() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {servicos.map((servico, indice) => (
             <div key={indice} className="card-hover bg-cream rounded-2xl overflow-hidden shadow-lg group">
-              <div className="relative h-56 sm:h-64">
+              <div className="relative">
                 <ImagemSite
                   src={servico.imagem.src}
                   alt={servico.imagem.alt}
-                  className="w-full h-full"
+                  variant="service"
+                  className="w-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent flex items-end p-5">
                   <div className="bg-white/90 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center">
@@ -489,7 +493,8 @@ function Galeria() {
               <ImagemSite
                 src={imagem.src}
                 alt={imagem.alt}
-                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : 'h-36 sm:h-48 md:h-56'}`}
+                variant="gallery"
+                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : ''}`}
               />
               <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/40 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75 text-center">
@@ -510,7 +515,13 @@ function Galeria() {
             <button onClick={() => setImagemSelecionada(null)} className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2" aria-label="Fechar">
               <i className="fas fa-times"></i>
             </button>
-            <ImagemSite src={imagemSelecionada} alt="Trabalho ampliado" className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" loading="eager" />
+            <ImagemSite 
+              src={imagemSelecionada} 
+              alt="Trabalho ampliado" 
+              variant="landscape"
+              className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" 
+              loading="eager" 
+            />
             <div className="mt-4 text-center">
               <BotaoWhatsApp mensagem={mensagensWhatsApp.galeriaSimilar}>
                 <i className="fab fa-whatsapp"></i>
@@ -746,7 +757,7 @@ function Rodape() {
           </div>
         </div>
         <div className="border-t border-white/10 pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/50 text-xs sm:text-sm text-center sm:text-left">© 2024 {dadosNegocio.nome}. Todos os direitos reservados.</p>
+          <p className="text-white/50 text-xs sm:text-sm text-center sm:text-left">© {ANO_ATUAL} {dadosNegocio.nome}. Todos os direitos reservados.</p>
           <div className="flex gap-3 sm:gap-4">
             <a href={contato.instagram.link} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-terracotta flex items-center justify-center transition-colors" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
             <a href={gerarLinkWhatsApp(mensagensWhatsApp.saudacao)} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-whatsapp flex items-center justify-center transition-colors" aria-label="WhatsApp"><i className="fab fa-whatsapp"></i></a>
@@ -773,6 +784,7 @@ export default function App() {
       <Depoimentos />
       <FAQ />
       <CTAFinal />
+      <StatusAtualizacao />
       <Rodape />
       <BotaoFlutuanteWhatsApp />
     </div>

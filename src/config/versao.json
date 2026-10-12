@@ -1,0 +1,38 @@
+{
+  "versao": "1.2.0",
+  "dataBuild": "2024-01-15T10:00:00.000Z",
+  "dataBuildFormatada": "15 de janeiro de 2024",
+  "changelog": [
+    {
+      "versao": "1.2.0",
+      "data": "2024-01-15",
+      "mudancas": [
+        "Sistema de auto-atualização implementado",
+        "Datas dinâmicas e versionamento automático",
+        "Componente de status de atualização",
+        "Hook useAutoUpdate para verificação periódica"
+      ]
+    },
+    {
+      "versao": "1.1.0",
+      "data": "2024-01-10",
+      "mudancas": [
+        "Menu mobile redesenhado com portal React",
+        "Espaçamentos ajustados em todas as seções",
+        "Melhorias de performance e acessibilidade"
+      ]
+    },
+    {
+      "versao": "1.0.0",
+      "data": "2024-01-05",
+      "mudancas": [
+        "Lançamento inicial do site",
+        "Landing page completa",
+        "Integração com WhatsApp",
+        "Galeria de imagens",
+        "Design responsivo"
+      ]
+    }
+  ],
+  "notas": "Este arquivo é usado para verificação de atualizações automáticas. Não edite manualmente sem atualizar também src/config/versao.ts"
+}

@@ -44,6 +44,10 @@ Acesse: `http://localhost:5173`
 ### Build para Produção
 
 ```bash
+# Opcional: atualizar data de build
+node scripts/update-build-date.js
+
+# Build
 npm run build
 ```
 
@@ -57,6 +61,19 @@ npm run validate
 
 Verifica imagens, TypeScript, build e variáveis de ambiente.
 
+## 🔄 Auto-Atualização
+
+O site possui um sistema inteligente de auto-atualização:
+
+- ✅ **Ano do copyright** atualizado automaticamente
+- ✅ **Data de build** gerada no momento do deploy
+- ✅ **Versionamento** com changelog
+- ✅ **Verificação periódica** de novas versões
+- ✅ **Indicador visual** de status no rodapé
+- ✅ **Notificações** quando há atualizações
+
+Consulte [AUTO_UPDATE.md](AUTO_UPDATE.md) para detalhes.
+
 ---
 
 ## 📁 Estrutura do Projeto
@@ -67,16 +84,23 @@ PetDanissaura3D/
 │   └── favicon.svg         # Favicon personalizado (pet + arte)
 ├── src/
 │   ├── components/
-│   │   └── ImagemSite.tsx  # Imagem com fallback automático
+│   │   ├── ImagemSite.tsx       # Imagem com fallback automático
+│   │   └── StatusAtualizacao.tsx # Indicador de versão e updates
 │   ├── config/
 │   │   ├── env.ts          # Variáveis de ambiente
-│   │   └── imagens.ts      # URLs das imagens
+│   │   ├── imagens.ts      # URLs das imagens
+│   │   ├── versao.ts       # Configurações de versão
+│   │   └── versao.json     # Dados de versão (verificação remota)
+│   ├── hooks/
+│   │   └── useAutoUpdate.ts # Hook de auto-atualização
 │   ├── App.tsx             # Componente principal
 │   ├── main.tsx            # Entry point
 │   └── index.css           # Estilos globais
 ├── scripts/
-│   └── validate.ts         # Script de validação
+│   ├── validate.ts         # Script de validação
+│   └── update-build-date.js # Atualiza data de build
 ├── .env.example            # Template de variáveis
+├── AUTO_UPDATE.md          # Sistema de auto-atualização
 ├── DEPLOY.md               # Guia de deploy
 ├── MANUTENCAO.md           # Guia de manutenção
 ├── ICONES.md               # Documentação de ícones
