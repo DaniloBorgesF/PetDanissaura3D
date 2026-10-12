@@ -237,3 +237,101 @@ section {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
 }
+
+/* ============================================================
+   CORREÇÕES DE IMAGEM - Eliminar espaços em branco
+   ============================================================ */
+
+/* Reset global de imagens */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+/* Container de imagem sem espaços */
+.img-container {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Correção para grids de imagens */
+.grid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Correção para flex containers */
+.flex img {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Previne gaps em imagens */
+figure, picture {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+/* ============================================================
+   CORREÇÕES DE TIPOGRAFIA - Texto fora do encaixe
+   ============================================================ */
+
+/* Previne overflow de texto */
+.text-container {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Títulos responsivos */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
+/* Parágrafos */
+p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* Links não quebram layout */
+a {
+  word-break: break-word;
+}
+
+/* Botões com texto centralizado */
+button, .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Em mobile, permitir quebra em botões longos */
+@media (max-width: 640px) {
+  button, .btn {
+    white-space: normal;
+    word-break: break-word;
+  }
+}
