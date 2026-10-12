@@ -4,103 +4,136 @@
  * ============================================================
  *
  * Este arquivo centraliza todas as imagens utilizadas no site.
- * Para substituir uma imagem, basta trocar a URL ou caminho.
- * Para adicionar novas imagens, inclua um novo objeto no array.
+ * As URLs são construídas dinamicamente a partir da variável de ambiente.
  *
- * Como usar imagens locais:
- *   1. Coloque a imagem na pasta `public/images/`
- *   2. Use o caminho relativo: '/images/nome-da-imagem.jpg'
- *
- * Como usar imagens externas (URL):
- *   1. Cole a URL completa no campo `src`
- *
- * Exemplo de adição:
- *   { src: '/images/meu-novo-trabalho.jpg', alt: 'Descrição do trabalho' }
+ * Para adicionar novas imagens:
+ * 1. Faça upload para o repositório GitHub
+ * 2. Adicione o nome do arquivo na lista abaixo
+ * 3. O site atualizará automaticamente
  *
  * ============================================================
  */
 
+import { config } from './env';
+
+// URL base das imagens (do ambiente ou padrão)
+const BASE_URL = config.imageBaseUrl;
+
+/**
+ * Lista de imagens disponíveis no repositório
+ * Adicione novos nomes de arquivo aqui para disponibilizá-los no site
+ */
+export const imagensDisponiveis = [
+  // Imagens grandes (webp) - trabalhos finais
+  '798135059_18102741314217188_718285032764919498_n.webp',
+  '828443378_18106260197217188_4650372766708068748_n.webp',
+  '810962194_18105044990217188_1754108696374562218_n.webp',
+  '831959158_18106247597217188_5081188161126538773_n.webp',
+  '819882710_18105047648217188_4603862579207581834_n.jpg',
+  '825269469_18105596426217188_2326124260290118986_n.webp',
+  '806299554_18103417334217188_5356991221821189995_n.webp',
+  '825270079_18105495944217188_1202846105606803976_n.webp',
+  '804445874_18103329374217188_56787509317163949_n.webp',
+  '805119830_18103153922217188_4898297114415455780_n.webp',
+  '818075076_18105184760217188_4891189182109765668_n.webp',
+  '828677545_18106233302217188_3709189679778970081_n.webp',
+  '829356945_18106231076217188_4110392735769196189_n.webp',
+];
+
+/**
+ * Gera URL completa da imagem
+ */
+export function getImagemUrl(nomeArquivo: string): string {
+  return `${BASE_URL}/${nomeArquivo}`;
+}
+
+/**
+ * Verifica se uma imagem existe (útil para validação)
+ */
+export async function verificarImagem(nomeArquivo: string): Promise<boolean> {
+  try {
+    const url = getImagemUrl(nomeArquivo);
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
 // ------------------------------------------------------------
 // IMAGEM DE DESTAQUE (HERO)
-// Usada na seção principal do site (cabeçalho)
 // ------------------------------------------------------------
 export const heroImage = {
-  src: 'https://image.qwenlm.ai/generated-images/06b00b4f-8881-4a43-9eb0-530db4a381a9/_result.png',
+  src: getImagemUrl('798135059_18102741314217188_718285032764919498_n.webp'),
   alt: 'Pintura artística de pet feita à mão',
 };
 
 // ------------------------------------------------------------
 // IMAGEM DA SEÇÃO "SOBRE"
-// Usada na seção que conta a história do ateliê
 // ------------------------------------------------------------
 export const aboutImage = {
-  src: 'https://image.qwenlm.ai/generated-images/e97d4384-1cbf-4ab4-b7d3-ea5e4e7da8ef/_result.png',
+  src: getImagemUrl('828443378_18106260197217188_4650372766708068748_n.webp'),
   alt: 'Processo de pintura artesanal de pets',
 };
 
 // ------------------------------------------------------------
 // IMAGENS DOS SERVIÇOS
-// Cada serviço possui uma imagem de capa para o card.
-// Para adicionar um novo serviço, inclua um novo objeto.
 // ------------------------------------------------------------
 export const servicesImages = {
   pinturaManual: {
-    src: 'https://image.qwenlm.ai/generated-images/0a3cd3dd-360b-4fe8-b587-807f20f69542/_result.png',
-    alt: 'Pintura manual de gato em tela',
+    src: getImagemUrl('810962194_18105044990217188_1754108696374562218_n.webp'),
+    alt: 'Pintura manual de pet em tela',
   },
   esculturas: {
-    src: 'https://image.qwenlm.ai/generated-images/3e9e23aa-f625-4bf6-b890-a97f9a022869/_result.png',
-    alt: 'Escultura artesanal de poodle',
+    src: getImagemUrl('831959158_18106247597217188_5081188161126538773_n.webp'),
+    alt: 'Escultura artesanal de pet',
   },
   quadrosPersonalizados: {
-    src: 'https://image.qwenlm.ai/generated-images/be6e06e2-4ecf-41a8-aeec-67d5c2ba977f/_result.png',
-    alt: 'Quadro personalizado de Labrador',
+    src: getImagemUrl('819882710_18105047648217188_4603862579207581834_n.jpg'),
+    alt: 'Quadro personalizado de pet',
   },
 };
 
 // ------------------------------------------------------------
 // GALERIA DE TRABALHOS
-// Array de imagens exibidas na galeria.
-// Para adicionar uma nova imagem, basta incluir um novo objeto.
-// Para remover, exclua o objeto correspondente.
 // ------------------------------------------------------------
 export const galleryImages = [
   {
-    src: 'https://image.qwenlm.ai/generated-images/06b00b4f-8881-4a43-9eb0-530db4a381a9/_result.png',
-    alt: 'Pintura de Golden Retriever',
+    src: getImagemUrl('825269469_18105596426217188_2326124260290118986_n.webp'),
+    alt: 'Trabalho artístico de pet - destaque',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/0a3cd3dd-360b-4fe8-b587-807f20f69542/_result.png',
-    alt: 'Pintura de gato',
+    src: getImagemUrl('806299554_18103417334217188_5356991221821189995_n.webp'),
+    alt: 'Pintura personalizada de pet',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/3e9e23aa-f625-4bf6-b890-a97f9a022869/_result.png',
-    alt: 'Escultura de poodle',
+    src: getImagemUrl('825270079_18105495944217188_1202846105606803976_n.webp'),
+    alt: 'Retrato artístico de pet',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/be6e06e2-4ecf-41a8-aeec-67d5c2ba977f/_result.png',
-    alt: 'Quadro de Labrador',
+    src: getImagemUrl('804445874_18103329374217188_56787509317163949_n.webp'),
+    alt: 'Quadro pintado à mão',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/2cb9042e-2604-4d8f-86c2-257e3d203770/_result.png',
-    alt: 'Retrato de Bulldog Francês',
+    src: getImagemUrl('805119830_18103153922217188_4898297114415455780_n.webp'),
+    alt: 'Arte personalizada de pet',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/e97d4384-1cbf-4ab4-b7d3-ea5e4e7da8ef/_result.png',
-    alt: 'Processo de pintura artesanal',
+    src: getImagemUrl('818075076_18105184760217188_4891189182109765668_n.webp'),
+    alt: 'Pintura artesanal de animal',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/35246ea9-74dc-4274-aa9f-5b4c37a782f8/_result.png',
-    alt: 'Coleção de miniaturas de pets',
+    src: getImagemUrl('828677545_18106233302217188_3709189679778970081_n.webp'),
+    alt: 'Obra de arte de pet',
   },
   {
-    src: 'https://image.qwenlm.ai/generated-images/972d0e44-570a-4986-ad65-988835628eab/_result.png',
-    alt: 'Pintura de Husky',
+    src: getImagemUrl('829356945_18106231076217188_4110392735769196189_n.webp'),
+    alt: 'Trabalho artístico personalizado',
   },
 ];
 
 // ------------------------------------------------------------
-// TIPOS EXPORTADOS (para uso em componentes)
+// TIPOS EXPORTADOS
 // ------------------------------------------------------------
 export interface ImagemSite {
   src: string;
