@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#faf7f2"/>
+      <stop offset="100%" style="stop-color:#f0ebe3"/>
+    </linearGradient>
+    <linearGradient id="brush" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c4704b"/>
+      <stop offset="100%" style="stop-color:#a85a38"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="80" fill="url(#bg)"/>
+  <!-- Paint brush handle -->
+  <rect x="120" y="340" width="280" height="32" rx="16" fill="#8b6f5e" transform="rotate(-35 260 356)"/>
+  <!-- Brush tip -->
+  <path d="M 180 280 Q 200 200 260 180 Q 320 160 340 220 Q 360 280 300 300 Q 240 320 180 280 Z" fill="url(#brush)"/>
+  <!-- Paw print - main pad -->
+  <ellipse cx="260" cy="260" rx="35" ry="30" fill="#faf7f2"/>
+  <!-- Paw print - toes -->
+  <circle cx="220" cy="220" r="14" fill="#faf7f2"/>
+  <circle cx="250" cy="205" r="14" fill="#faf7f2"/>
+  <circle cx="285" cy="210" r="14" fill="#faf7f2"/>
+  <circle cx="305" cy="235" r="14" fill="#faf7f2"/>
+  <!-- Small paint drops -->
+  <circle cx="350" cy="180" r="8" fill="#c4704b" opacity="0.6"/>
+  <circle cx="370" cy="200" r="5" fill="#c4704b" opacity="0.4"/>
+  <circle cx="160" cy="200" r="6" fill="#c4704b" opacity="0.5"/>
+</svg>

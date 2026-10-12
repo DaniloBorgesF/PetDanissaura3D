@@ -63,21 +63,23 @@ Verifica imagens, TypeScript, build e variáveis de ambiente.
 
 ```
 PetDanissaura3D/
+├── public/
+│   └── favicon.svg         # Favicon personalizado (pet + arte)
 ├── src/
-│   ├── components/         # Componentes reutilizáveis
+│   ├── components/
 │   │   └── ImagemSite.tsx  # Imagem com fallback automático
-│   ├── config/             # Configurações centralizadas
+│   ├── config/
 │   │   ├── env.ts          # Variáveis de ambiente
 │   │   └── imagens.ts      # URLs das imagens
 │   ├── App.tsx             # Componente principal
 │   ├── main.tsx            # Entry point
 │   └── index.css           # Estilos globais
-├── public/                 # Assets estáticos
 ├── scripts/
 │   └── validate.ts         # Script de validação
 ├── .env.example            # Template de variáveis
 ├── DEPLOY.md               # Guia de deploy
 ├── MANUTENCAO.md           # Guia de manutenção
+├── ICONES.md               # Documentação de ícones
 └── README.md               # Este arquivo
 ```
 

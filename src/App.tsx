@@ -426,7 +426,7 @@ function ComoFunciona() {
     { icone: 'fa-camera', titulo: 'Envie a foto', descricao: 'Envie a foto do seu pet pelo WhatsApp.' },
     { icone: 'fa-palette', titulo: 'Definimos o estilo', descricao: 'Conversamos sobre estilo e detalhes.' },
     { icone: 'fa-paint-brush', titulo: 'Produzimos com carinho', descricao: 'Criamos sua arte à mão.' },
-    { icone: 'fa-shipping-fast', titulo: 'Enviamos com segurança', descricao: 'Embalagem especial para todo Brasil.' },
+    { icone: 'fa-truck-fast', titulo: 'Enviamos com segurança', descricao: 'Embalagem especial para todo Brasil.' },
   ];
 
   return (
@@ -633,7 +633,7 @@ function Rodape() {
             <ul className="space-y-2.5 sm:space-y-3">
               <li><a href={gerarLinkWhatsApp(mensagensWhatsApp.saudacao)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-terracotta-light transition-colors text-sm sm:text-base"><i className="fab fa-whatsapp text-terracotta-light"></i>{contato.whatsapp.numeroFormatado}</a></li>
               <li><a href={contato.instagram.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-terracotta-light transition-colors text-sm sm:text-base"><i className="fab fa-instagram text-terracotta-light"></i>{contato.instagram.usuario}</a></li>
-              <li className="flex items-center gap-3 text-white/70 text-sm sm:text-base"><i className="fas fa-map-marker-alt text-terracotta-light"></i><span>{dadosNegocio.cidades.join(' – ')} / {dadosNegocio.estado}</span></li>
+              <li className="flex items-center gap-3 text-white/70 text-sm sm:text-base"><i className="fas fa-location-dot text-terracotta-light"></i><span>{dadosNegocio.cidades.join(' – ')} / {dadosNegocio.estado}</span></li>
               <li className="flex items-center gap-3 text-white/70 text-sm sm:text-base"><i className="fas fa-truck text-terracotta-light"></i><span>Envio para todo o Brasil</span></li>
             </ul>
           </div>
