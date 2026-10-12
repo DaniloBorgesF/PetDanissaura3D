@@ -99,20 +99,21 @@ function Navbar() {
   }, [menuAberto]);
 
   const linksNav = [
-    { href: '#sobre', texto: 'Sobre' },
-    { href: '#servicos', texto: 'Serviços' },
-    { href: '#galeria', texto: 'Galeria' },
-    { href: '#como-funciona', texto: 'Como Funciona' },
-    { href: '#faq', texto: 'FAQ' },
+    { href: '#sobre', texto: 'Sobre', icone: 'fa-heart' },
+    { href: '#servicos', texto: 'Serviços', icone: 'fa-palette' },
+    { href: '#galeria', texto: 'Galeria', icone: 'fa-images' },
+    { href: '#como-funciona', texto: 'Como Funciona', icone: 'fa-list-check' },
+    { href: '#faq', texto: 'FAQ', icone: 'fa-circle-question' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${rolou ? 'bg-cream/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4 md:py-5'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${rolou ? 'bg-cream/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4 md:py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         <a href="#" className="font-script text-2xl md:text-3xl text-terracotta font-bold shrink-0">
           {dadosNegocio.nome}
         </a>
 
+        {/* Menu Desktop */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {linksNav.map((link) => (
             <a key={link.href} href={link.href} className="text-brown-light hover:text-terracotta transition-colors text-sm font-medium relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-terracotta after:transition-all hover:after:w-full whitespace-nowrap">
@@ -124,25 +125,129 @@ function Navbar() {
           </a>
         </div>
 
-        <button onClick={() => setMenuAberto(!menuAberto)} className="md:hidden text-brown text-2xl p-2" aria-label="Menu">
-          <i className={`fas ${menuAberto ? 'fa-times' : 'fa-bars'}`}></i>
+        {/* Botão Hambúrguer Mobile - Design Personalizado */}
+        <button 
+          onClick={() => setMenuAberto(!menuAberto)} 
+          className="md:hidden relative w-10 h-10 flex items-center justify-center"
+          aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={menuAberto}
+        >
+          <div className="relative w-6 h-5">
+            <span className={`absolute left-0 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'top-2.5 rotate-45' : 'top-0'}`}></span>
+            <span className={`absolute left-0 top-2.5 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'opacity-0 scale-0' : 'opacity-100'}`}></span>
+            <span className={`absolute left-0 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'top-2.5 -rotate-45' : 'top-5'}`}></span>
+          </div>
         </button>
       </div>
 
+      {/* Menu Mobile - Design Moderno */}
       {menuAberto && (
-        <div className="md:hidden fixed inset-0 top-[60px] bg-cream/98 backdrop-blur-md z-30 animate-fade-in">
-          <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
-            {linksNav.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setMenuAberto(false)} className="text-brown text-xl font-medium hover:text-terracotta transition-colors">
-                {link.texto}
+        <>
+          {/* Overlay escuro */}
+          <div 
+            className="md:hidden fixed inset-0 bg-brown/50 backdrop-blur-sm z-40 animate-fade-in"
+            onClick={() => setMenuAberto(false)}
+          ></div>
+
+          {/* Painel do menu */}
+          <div className="md:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-cream z-50 shadow-2xl overflow-y-auto animate-slide-in-right">
+            {/* Header do menu */}
+            <div className="sticky top-0 bg-gradient-to-b from-terracotta/10 to-transparent pt-6 pb-4 px-6 border-b border-beige">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-script text-2xl text-terracotta font-bold">Menu</h2>
+                <button 
+                  onClick={() => setMenuAberto(false)}
+                  className="w-10 h-10 rounded-full bg-beige-light hover:bg-beige flex items-center justify-center transition-colors"
+                  aria-label="Fechar menu"
+                >
+                  <i className="fas fa-xmark text-brown text-xl"></i>
+                </button>
+              </div>
+              <p className="text-brown-light text-sm">Navegue pelo nosso ateliê</p>
+            </div>
+
+            {/* Links de navegação */}
+            <div className="px-6 py-6">
+              <nav className="space-y-2">
+                {linksNav.map((link, index) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuAberto(false)}
+                    className="group flex items-center gap-4 p-4 rounded-xl hover:bg-beige-light transition-all duration-200"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-terracotta/10 group-hover:bg-terracotta/20 flex items-center justify-center transition-colors">
+                      <i className={`fas ${link.icone} text-terracotta`}></i>
+                    </div>
+                    <span className="text-brown font-medium text-lg group-hover:text-terracotta transition-colors">
+                      {link.texto}
+                    </span>
+                    <i className="fas fa-chevron-right text-brown-light/30 group-hover:text-terracotta group-hover:translate-x-1 transition-all ml-auto"></i>
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Divider */}
+            <div className="px-6">
+              <div className="h-px bg-gradient-to-r from-transparent via-beige to-transparent"></div>
+            </div>
+
+            {/* CTA Principal */}
+            <div className="px-6 py-6">
+              <a
+                href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuAberto(false)}
+                className="btn-shine flex items-center justify-center gap-3 bg-whatsapp hover:bg-whatsapp-dark text-white font-semibold py-4 px-6 rounded-full transition-all duration-300 hover:scale-105 shadow-lg w-full"
+              >
+                <i className="fab fa-whatsapp text-2xl"></i>
+                <span className="text-lg">Solicitar Orçamento</span>
               </a>
-            ))}
-            <div className="w-16 h-[1px] bg-terracotta/30 my-2"></div>
-            <a href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)} target="_blank" rel="noopener noreferrer" onClick={() => setMenuAberto(false)} className="bg-whatsapp text-white text-center px-8 py-4 rounded-full font-semibold text-lg w-full max-w-xs">
-              <i className="fab fa-whatsapp mr-2"></i> Solicitar Orçamento
-            </a>
+            </div>
+
+            {/* Informações de contato */}
+            <div className="px-6 pb-8">
+              <div className="bg-beige-light rounded-2xl p-5 space-y-4">
+                <h3 className="font-semibold text-brown text-sm uppercase tracking-wide">Contato</h3>
+                
+                <a
+                  href={gerarLinkWhatsApp(mensagensWhatsApp.saudacao)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-brown-light hover:text-terracotta transition-colors"
+                >
+                  <i className="fab fa-whatsapp text-terracotta"></i>
+                  <span className="text-sm">{contato.whatsapp.numeroFormatado}</span>
+                </a>
+
+                <a
+                  href={contato.instagram.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-brown-light hover:text-terracotta transition-colors"
+                >
+                  <i className="fab fa-instagram text-terracotta"></i>
+                  <span className="text-sm">{contato.instagram.usuario}</span>
+                </a>
+
+                <div className="flex items-center gap-3 text-brown-light">
+                  <i className="fas fa-location-dot text-terracotta"></i>
+                  <span className="text-sm">{dadosNegocio.cidades.join(' – ')} / {dadosNegocio.estado}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer do menu */}
+            <div className="px-6 pb-6 text-center">
+              <p className="text-brown-light/50 text-xs">
+                © 2024 {dadosNegocio.nome}
+              </p>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </nav>
   );
