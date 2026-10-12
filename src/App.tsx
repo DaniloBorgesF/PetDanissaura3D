@@ -511,28 +511,28 @@ function Galeria() {
 
       {imagemSelecionada && (
         <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
-          <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col animate-scale-in" onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-w-6xl w-full flex flex-col items-center animate-scale-in" onClick={(e) => e.stopPropagation()}>
             {/* Botão fechar */}
             <button 
               onClick={() => setImagemSelecionada(null)} 
-              className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2 z-10" 
+              className="absolute -top-14 right-0 text-white hover:text-terracotta transition-colors text-3xl p-2 z-10" 
               aria-label="Fechar"
             >
               <i className="fas fa-times"></i>
             </button>
             
-            {/* Container da imagem */}
-            <div className="flex-1 flex items-center justify-center overflow-hidden">
+            {/* Container da imagem - exibe por inteiro sem cortes */}
+            <div className="w-full flex items-center justify-center mb-6">
               <img
                 src={imagemSelecionada}
                 alt="Trabalho ampliado"
-                className="max-w-full max-h-[75vh] w-auto h-auto object-contain rounded-xl shadow-2xl"
+                className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-4 border-cream/20"
                 loading="eager"
               />
             </div>
             
             {/* Botão WhatsApp */}
-            <div className="mt-6 text-center">
+            <div className="text-center">
               <BotaoWhatsApp mensagem={mensagensWhatsApp.galeriaSimilar}>
                 <i className="fab fa-whatsapp"></i>
                 Solicitar similar
