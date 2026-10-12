@@ -15,6 +15,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import ImagemSite from './components/ImagemSite';
 import {
   heroImage,
@@ -99,52 +100,158 @@ function Navbar() {
   }, [menuAberto]);
 
   const linksNav = [
-    { href: '#sobre', texto: 'Sobre' },
-    { href: '#servicos', texto: 'Serviços' },
-    { href: '#galeria', texto: 'Galeria' },
-    { href: '#como-funciona', texto: 'Como Funciona' },
-    { href: '#faq', texto: 'FAQ' },
+    { href: '#sobre', texto: 'Sobre', icone: 'fa-heart' },
+    { href: '#servicos', texto: 'Serviços', icone: 'fa-palette' },
+    { href: '#galeria', texto: 'Galeria', icone: 'fa-images' },
+    { href: '#como-funciona', texto: 'Como Funciona', icone: 'fa-list-check' },
+    { href: '#faq', texto: 'FAQ', icone: 'fa-circle-question' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${rolou ? 'bg-cream/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4 md:py-5'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <a href="#" className="font-script text-2xl md:text-3xl text-terracotta font-bold shrink-0">
-          {dadosNegocio.nome}
-        </a>
-
-        <div className="hidden md:flex items-center gap-6 lg:gap-8">
-          {linksNav.map((link) => (
-            <a key={link.href} href={link.href} className="text-brown-light hover:text-terracotta transition-colors text-sm font-medium relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-terracotta after:transition-all hover:after:w-full whitespace-nowrap">
-              {link.texto}
-            </a>
-          ))}
-          <a href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)} target="_blank" rel="noopener noreferrer" className="btn-shine bg-terracotta hover:bg-terracotta-dark text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 whitespace-nowrap">
-            <i className="fab fa-whatsapp mr-1"></i> Orçamento
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${rolou ? 'bg-cream/95 backdrop-blur-md shadow-md py-3 md:py-4' : 'bg-transparent py-4 md:py-5'}`}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex items-center justify-between">
+          <a href="#" className="font-script text-2xl md:text-3xl text-terracotta font-bold shrink-0">
+            {dadosNegocio.nome}
           </a>
-        </div>
 
-        <button onClick={() => setMenuAberto(!menuAberto)} className="md:hidden text-brown text-2xl p-2" aria-label="Menu">
-          <i className={`fas ${menuAberto ? 'fa-times' : 'fa-bars'}`}></i>
-        </button>
-      </div>
-
-      {menuAberto && (
-        <div className="md:hidden fixed inset-0 top-[60px] bg-cream/98 backdrop-blur-md z-30 animate-fade-in">
-          <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
+          {/* Menu Desktop */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {linksNav.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setMenuAberto(false)} className="text-brown text-xl font-medium hover:text-terracotta transition-colors">
+              <a key={link.href} href={link.href} className="text-brown-light hover:text-terracotta transition-colors text-sm font-medium relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-terracotta after:transition-all hover:after:w-full whitespace-nowrap">
                 {link.texto}
               </a>
             ))}
-            <div className="w-16 h-[1px] bg-terracotta/30 my-2"></div>
-            <a href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)} target="_blank" rel="noopener noreferrer" onClick={() => setMenuAberto(false)} className="bg-whatsapp text-white text-center px-8 py-4 rounded-full font-semibold text-lg w-full max-w-xs">
-              <i className="fab fa-whatsapp mr-2"></i> Solicitar Orçamento
+            <a href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)} target="_blank" rel="noopener noreferrer" className="btn-shine bg-terracotta hover:bg-terracotta-dark text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 whitespace-nowrap">
+              <i className="fab fa-whatsapp mr-1"></i> Orçamento
             </a>
           </div>
+
+          {/* Botão Hambúrguer Mobile */}
+          <button 
+            onClick={() => setMenuAberto(!menuAberto)} 
+            className="md:hidden relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-beige-light transition-colors"
+            aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={menuAberto}
+          >
+            <div className="relative w-6 h-5">
+              <span className={`absolute left-0 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'top-2.5 rotate-45' : 'top-0'}`}></span>
+              <span className={`absolute left-0 top-2.5 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'opacity-0 scale-0' : 'opacity-100'}`}></span>
+              <span className={`absolute left-0 w-6 h-0.5 bg-brown rounded-full transition-all duration-300 ${menuAberto ? 'top-2.5 -rotate-45' : 'top-5'}`}></span>
+            </div>
+          </button>
         </div>
+      </nav>
+
+      {/* Menu Mobile - Renderizado via Portal fora do nav */}
+      {menuAberto && createPortal(
+        <>
+          {/* Overlay */}
+          <div 
+            className="fixed inset-0 bg-brown/60 backdrop-blur-sm z-[60] animate-fade-in"
+            onClick={() => setMenuAberto(false)}
+          />
+
+          {/* Painel do menu */}
+          <div className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-cream z-[70] shadow-2xl overflow-y-auto animate-slide-in-right">
+            {/* Header */}
+            <div className="sticky top-0 bg-cream border-b border-beige pt-5 pb-4 px-5">
+              <div className="flex items-center justify-between">
+                <h2 className="font-script text-2xl text-terracotta font-bold">Menu</h2>
+                <button 
+                  onClick={() => setMenuAberto(false)}
+                  className="w-10 h-10 rounded-full bg-beige-light hover:bg-beige flex items-center justify-center transition-colors"
+                  aria-label="Fechar menu"
+                >
+                  <i className="fas fa-xmark text-brown text-lg"></i>
+                </button>
+              </div>
+            </div>
+
+            {/* Links */}
+            <div className="px-5 py-6">
+              <nav className="space-y-1">
+                {linksNav.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuAberto(false)}
+                    className="group flex items-center gap-4 p-3 rounded-xl hover:bg-beige-light transition-all duration-200"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-terracotta/10 group-hover:bg-terracotta/20 flex items-center justify-center transition-colors shrink-0">
+                      <i className={`fas ${link.icone} text-terracotta`}></i>
+                    </div>
+                    <span className="text-brown font-medium text-base group-hover:text-terracotta transition-colors">
+                      {link.texto}
+                    </span>
+                    <i className="fas fa-chevron-right text-brown-light/30 group-hover:text-terracotta group-hover:translate-x-1 transition-all ml-auto"></i>
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Divider */}
+            <div className="px-5">
+              <div className="h-px bg-gradient-to-r from-transparent via-beige to-transparent"></div>
+            </div>
+
+            {/* CTA */}
+            <div className="px-5 py-5">
+              <a
+                href={gerarLinkWhatsApp(mensagensWhatsApp.orcamentoGeral)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuAberto(false)}
+                className="btn-shine flex items-center justify-center gap-3 bg-whatsapp hover:bg-whatsapp-dark text-white font-semibold py-3.5 px-6 rounded-full transition-all duration-300 hover:scale-105 shadow-lg w-full"
+              >
+                <i className="fab fa-whatsapp text-xl"></i>
+                <span className="text-base">Solicitar Orçamento</span>
+              </a>
+            </div>
+
+            {/* Contato */}
+            <div className="px-5 pb-6">
+              <div className="bg-beige-light rounded-2xl p-4 space-y-3">
+                <h3 className="font-semibold text-brown text-xs uppercase tracking-wide">Contato</h3>
+                
+                <a
+                  href={gerarLinkWhatsApp(mensagensWhatsApp.saudacao)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-brown-light hover:text-terracotta transition-colors text-sm"
+                >
+                  <i className="fab fa-whatsapp text-terracotta"></i>
+                  <span>{contato.whatsapp.numeroFormatado}</span>
+                </a>
+
+                <a
+                  href={contato.instagram.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-brown-light hover:text-terracotta transition-colors text-sm"
+                >
+                  <i className="fab fa-instagram text-terracotta"></i>
+                  <span>{contato.instagram.usuario}</span>
+                </a>
+
+                <div className="flex items-center gap-3 text-brown-light text-sm">
+                  <i className="fas fa-location-dot text-terracotta"></i>
+                  <span>{dadosNegocio.cidades.join(' – ')} / {dadosNegocio.estado}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-5 pb-5 text-center">
+              <p className="text-brown-light/50 text-xs">
+                © 2024 {dadosNegocio.nome}
+              </p>
+            </div>
+          </div>
+        </>,
+        document.body
       )}
-    </nav>
+    </>
   );
 }
 
@@ -166,7 +273,7 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-cream via-cream/20 to-transparent"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-24 pb-16 md:pt-0 md:pb-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-24 pb-16 md:pt-0 md:pb-0">
         <div className="max-w-2xl">
           <p className="font-script text-terracotta text-lg sm:text-xl md:text-2xl mb-3 md:mb-4 animate-fade-in-up">
             ✨ Feito à mão, com amor
@@ -214,11 +321,11 @@ function Hero() {
 
 function Sobre() {
   return (
-    <section id="sobre" className="py-16 md:py-24 lg:py-28 bg-cream relative overflow-hidden">
+    <section id="sobre" className="py-20 md:py-28 lg:py-32 bg-cream relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-terracotta/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-terracotta/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative">
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="relative order-2 md:order-1">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
@@ -293,11 +400,11 @@ function Servicos() {
   ];
 
   return (
-    <section id="servicos" className="py-16 md:py-24 lg:py-28 bg-beige-light relative">
+    <section id="servicos" className="py-20 md:py-28 lg:py-32 bg-beige-light relative">
       <div className="absolute top-10 left-10 w-20 h-20 border border-terracotta/10 rounded-full"></div>
       <div className="absolute bottom-10 right-10 w-32 h-32 border border-terracotta/10 rounded-full"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12 md:mb-16">
           <p className="font-script text-terracotta text-lg md:text-xl mb-2 md:mb-3">Nossos Serviços</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brown font-bold mb-3 md:mb-4">
@@ -360,8 +467,8 @@ function Galeria() {
   }, [imagemSelecionada]);
 
   return (
-    <section id="galeria" className="py-16 md:py-24 lg:py-28 bg-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section id="galeria" className="py-20 md:py-28 lg:py-32 bg-cream">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-16">
           <p className="font-script text-terracotta text-lg md:text-xl mb-2 md:mb-3">Galeria</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brown font-bold mb-3 md:mb-4">
@@ -430,8 +537,8 @@ function ComoFunciona() {
   ];
 
   return (
-    <section id="como-funciona" className="py-16 md:py-24 lg:py-28 bg-beige-light relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
+    <section id="como-funciona" className="py-20 md:py-28 lg:py-32 bg-beige-light relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12 md:mb-16">
           <p className="font-script text-terracotta text-lg md:text-xl mb-2 md:mb-3">Como Funciona</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brown font-bold mb-3 md:mb-4">
@@ -485,8 +592,8 @@ function Depoimentos() {
   ];
 
   return (
-    <section className="py-16 md:py-24 lg:py-28 bg-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="py-20 md:py-28 lg:py-32 bg-cream">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-16">
           <p className="font-script text-terracotta text-lg md:text-xl mb-2 md:mb-3">Depoimentos</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brown font-bold mb-3 md:mb-4">
@@ -535,8 +642,8 @@ function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-16 md:py-24 lg:py-28 bg-beige-light">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <section id="faq" className="py-20 md:py-28 lg:py-32 bg-beige-light">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-16">
           <p className="font-script text-terracotta text-lg md:text-xl mb-2 md:mb-3">Dúvidas Frequentes</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-brown font-bold mb-3 md:mb-4">
@@ -576,7 +683,7 @@ function FAQ() {
 
 function CTAFinal() {
   return (
-    <section className="py-16 md:py-24 lg:py-28 bg-gradient-to-br from-terracotta via-terracotta-dark to-brown relative overflow-hidden">
+    <section className="py-20 md:py-28 lg:py-32 bg-gradient-to-br from-terracotta via-terracotta-dark to-brown relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 sm:w-40 sm:h-40 border-2 border-white rounded-full"></div>
         <div className="absolute bottom-10 right-10 w-48 h-48 sm:w-60 sm:h-60 border-2 border-white rounded-full"></div>
@@ -611,8 +718,8 @@ function Rodape() {
   ];
 
   return (
-    <footer className="bg-brown text-white py-10 md:py-16 safe-area-bottom">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="bg-brown text-white py-12 md:py-20 safe-area-bottom">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-10 mb-8 md:mb-10">
           <div className="sm:col-span-2 md:col-span-1">
             <h3 className="font-script text-2xl sm:text-3xl text-terracotta-light mb-3 md:mb-4">{dadosNegocio.nome}</h3>

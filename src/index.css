@@ -119,6 +119,19 @@ body {
   animation: fadeIn 1s ease-out forwards;
 }
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -201,6 +214,71 @@ section {
   background-image: radial-gradient(circle, var(--color-terracotta) 1px, transparent 1px);
   background-size: 20px 20px;
   opacity: 0.1;
+}
+
+/* ============================================================
+   MENU MOBILE - Estilos avançados
+   ============================================================ */
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Mobile Menu Panel */
+.mobile-menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 24rem;
+  background-color: var(--color-cream);
+  z-index: 50;
+  overflow-y: auto;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Menu Link Hover Effects */
+.mobile-menu-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-terracotta), transparent);
+  opacity: 0.1;
+  transition: width 0.3s ease;
+}
+
+.mobile-menu-link:hover::before {
+  width: 100%;
+}
+
+/* Mobile Menu Icon Animation */
+.mobile-menu-icon {
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-link:hover .mobile-menu-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Hamburger Animation */
+.hamburger-line {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
 }
 
 /* Mobile optimizations */
