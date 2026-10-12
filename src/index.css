@@ -387,6 +387,60 @@ img {
 }
 
 /* ============================================================
+   MODAL DE IMAGENS - Visualização perfeita sem cortes
+   ============================================================ */
+
+/* Container do modal */
+.modal-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Imagem no modal - nunca corta */
+.modal-image-container img {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Imagens em visualização ampliada */
+img.object-contain {
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Container flex para imagens */
+.flex img.object-contain {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* Previne cortes em qualquer imagem com max-height */
+img[class*="max-h-"] {
+  object-fit: contain;
+  width: auto;
+  height: auto;
+}
+
+/* Ajuste específico para modais */
+.fixed img {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ============================================================
    CORREÇÕES DE TIPOGRAFIA - Texto fora do encaixe
    ============================================================ */
 

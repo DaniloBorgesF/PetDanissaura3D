@@ -510,19 +510,29 @@ function Galeria() {
       </div>
 
       {imagemSelecionada && (
-        <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
-          <div className="relative max-w-4xl w-full animate-scale-in" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setImagemSelecionada(null)} className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2" aria-label="Fechar">
+        <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
+          <div className="relative max-w-5xl w-full max-h-[90vh] flex flex-col animate-scale-in" onClick={(e) => e.stopPropagation()}>
+            {/* Botão fechar */}
+            <button 
+              onClick={() => setImagemSelecionada(null)} 
+              className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2 z-10" 
+              aria-label="Fechar"
+            >
               <i className="fas fa-times"></i>
             </button>
-            <ImagemSite 
-              src={imagemSelecionada} 
-              alt="Trabalho ampliado" 
-              variant="landscape"
-              className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" 
-              loading="eager" 
-            />
-            <div className="mt-4 text-center">
+            
+            {/* Container da imagem */}
+            <div className="flex-1 flex items-center justify-center overflow-hidden">
+              <img
+                src={imagemSelecionada}
+                alt="Trabalho ampliado"
+                className="max-w-full max-h-[75vh] w-auto h-auto object-contain rounded-xl shadow-2xl"
+                loading="eager"
+              />
+            </div>
+            
+            {/* Botão WhatsApp */}
+            <div className="mt-6 text-center">
               <BotaoWhatsApp mensagem={mensagensWhatsApp.galeriaSimilar}>
                 <i className="fab fa-whatsapp"></i>
                 Solicitar similar
