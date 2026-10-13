@@ -487,7 +487,7 @@ function Galeria() {
           {galleryImages.map((imagem, indice) => (
             <div
               key={indice}
-              className={`relative overflow-hidden rounded-lg sm:rounded-xl cursor-pointer group ${indice === 0 ? 'col-span-2 row-span-2' : ''}`}
+              className={`gallery-item relative overflow-hidden rounded-lg sm:rounded-xl cursor-pointer group ${indice === 0 ? 'col-span-2 row-span-2' : ''}`}
               onClick={() => setImagemSelecionada(imagem.src)}
             >
               <ImagemSite
@@ -511,7 +511,7 @@ function Galeria() {
 
       {imagemSelecionada && (
         <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
-          <div className="relative max-w-6xl w-full flex flex-col items-center animate-scale-in" onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-w-6xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
             {/* Botão fechar */}
             <button 
               onClick={() => setImagemSelecionada(null)} 
