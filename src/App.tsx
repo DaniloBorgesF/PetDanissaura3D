@@ -785,7 +785,7 @@ function Rodape() {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream overflow-x-hidden max-w-[100vw]">
       <Navbar />
       <Hero />
       <Sobre />

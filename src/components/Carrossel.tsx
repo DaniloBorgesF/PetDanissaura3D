@@ -1,6 +1,6 @@
 /**
  * Componente de Carrossel de Imagens
- * Exibe imagens em formato de slider horizontal com navegação
+ * Exibe imagens em formato de slider horizontal com navegação por setas
  */
 
 import { useState, useRef, useEffect } from 'react';
@@ -43,7 +43,7 @@ export default function Carrossel() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-beige-light">
+    <section className="py-16 md:py-24 bg-beige-light overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho */}
         <div className="text-center mb-12">
@@ -56,77 +56,56 @@ export default function Carrossel() {
         </div>
 
         {/* Carrossel */}
-        <div className="relative">
-          {/* Container do carrossel */}
-          <div
-            ref={carrosselRef}
-            className="flex gap-4 overflow-x-hidden scroll-smooth"
-            style={{ scrollSnapType: 'x mandatory' }}
-          >
-            {carrosselImages.map((imagem, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-[280px] md:w-[320px] cursor-pointer group"
-                style={{ scrollSnapAlign: 'start' }}
-                onClick={() => setImagemSelecionada(imagem.src)}
-              >
-                <div className="relative overflow-hidden rounded-2xl shadow-lg bg-cream aspect-[4/5]">
-                  <ImagemSite
-                    src={imagem.src}
-                    alt={imagem.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  {/* Overlay no hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-brown/80 via-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <div className="text-white">
-                      <p className="font-serif text-lg font-semibold mb-2">{imagem.alt}</p>
-                      <p className="text-sm opacity-90">Clique para ver detalhes</p>
-                    </div>
+        <div className="relative overflow-hidden">
+          {/* Container com padding para os botões */}
+          <div className="px-12 md:px-16">
+            {/* Botão voltar */}
+            <button
+              onClick={voltar}
+              className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 bg-cream hover:bg-beige text-terracotta w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+              aria-label="Imagem anterior"
+            >
+              <i className="fas fa-chevron-left text-lg md:text-xl"></i>
+            </button>
+
+            {/* Botão avançar */}
+            <button
+              onClick={avancar}
+              className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 bg-cream hover:bg-beige text-terracotta w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+              aria-label="Próxima imagem"
+            >
+              <i className="fas fa-chevron-right text-lg md:text-xl"></i>
+            </button>
+
+            {/* Container do carrossel */}
+            <div
+              ref={carrosselRef}
+              className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth"
+              style={{ 
+                scrollSnapType: 'x mandatory',
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}
+            >
+              {carrosselImages.map((imagem, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-[200px] sm:w-[240px] md:w-[280px] lg:w-[320px] cursor-pointer"
+                  style={{ scrollSnapAlign: 'start' }}
+                  onClick={() => setImagemSelecionada(imagem.src)}
+                >
+                  <div className="overflow-hidden rounded-2xl shadow-lg bg-cream aspect-[4/5]">
+                    <ImagemSite
+                      src={imagem.src}
+                      alt={imagem.alt}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-
-          {/* Botões de navegação */}
-          <button
-            onClick={voltar}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 bg-cream hover:bg-beige text-terracotta w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
-            aria-label="Imagem anterior"
-          >
-            <i className="fas fa-chevron-left text-xl"></i>
-          </button>
-
-          <button
-            onClick={avancar}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 bg-cream hover:bg-beige text-terracotta w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
-            aria-label="Próxima imagem"
-          >
-            <i className="fas fa-chevron-right text-xl"></i>
-          </button>
-        </div>
-
-        {/* Indicadores */}
-        <div className="flex justify-center gap-2 mt-8">
-          {carrosselImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setIndiceAtual(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === indiceAtual
-                  ? 'w-8 h-2 bg-terracotta'
-                  : 'w-2 h-2 bg-brown-light/30 hover:bg-brown-light/50'
-              }`}
-              aria-label={`Ir para imagem ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Contador */}
-        <div className="text-center mt-4">
-          <p className="text-brown-light text-sm">
-            {indiceAtual + 1} de {totalImagens} imagens
-          </p>
         </div>
       </div>
 
