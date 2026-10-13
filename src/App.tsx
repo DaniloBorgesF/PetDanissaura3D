@@ -483,18 +483,18 @@ function Galeria() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {galleryImages.map((imagem, indice) => (
             <div
               key={indice}
-              className={`gallery-item relative overflow-hidden rounded-lg sm:rounded-xl cursor-pointer group ${indice === 0 ? 'col-span-2 row-span-2' : ''}`}
+              className="gallery-item card-hover relative overflow-hidden rounded-2xl cursor-pointer shadow-lg group"
               onClick={() => setImagemSelecionada(imagem.src)}
             >
               <ImagemSite
                 src={imagem.src}
                 alt={imagem.alt}
-                variant="gallery"
-                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : ''}`}
+                variant="service"
+                className="w-full"
               />
               <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/40 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75 text-center">
