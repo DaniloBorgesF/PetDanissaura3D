@@ -483,18 +483,18 @@ function Galeria() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {galleryImages.map((imagem, indice) => (
             <div
               key={indice}
-              className={`relative overflow-hidden rounded-lg sm:rounded-xl cursor-pointer group ${indice === 0 ? 'col-span-2 row-span-2' : ''}`}
+              className="gallery-item card-hover relative overflow-hidden rounded-2xl cursor-pointer shadow-lg group"
               onClick={() => setImagemSelecionada(imagem.src)}
             >
               <ImagemSite
                 src={imagem.src}
                 alt={imagem.alt}
-                variant="gallery"
-                className={`w-full ${indice === 0 ? 'h-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px]' : ''}`}
+                variant="service"
+                className="w-full"
               />
               <div className="absolute inset-0 bg-brown/0 group-hover:bg-brown/40 transition-all duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75 text-center">
@@ -510,19 +510,29 @@ function Galeria() {
       </div>
 
       {imagemSelecionada && (
-        <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
-          <div className="relative max-w-4xl w-full animate-scale-in" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setImagemSelecionada(null)} className="absolute -top-12 right-0 text-white hover:text-terracotta transition-colors text-2xl p-2" aria-label="Fechar">
+        <div className="fixed inset-0 z-50 bg-brown/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in" onClick={() => setImagemSelecionada(null)}>
+          <div className="relative max-w-6xl w-full flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+            {/* Botão fechar */}
+            <button 
+              onClick={() => setImagemSelecionada(null)} 
+              className="absolute -top-14 right-0 text-white hover:text-terracotta transition-colors text-3xl p-2 z-10" 
+              aria-label="Fechar"
+            >
               <i className="fas fa-times"></i>
             </button>
-            <ImagemSite 
-              src={imagemSelecionada} 
-              alt="Trabalho ampliado" 
-              variant="landscape"
-              className="w-full max-h-[70vh] sm:max-h-[80vh] rounded-xl" 
-              loading="eager" 
-            />
-            <div className="mt-4 text-center">
+            
+            {/* Container da imagem - exibe por inteiro sem cortes */}
+            <div className="w-full flex items-center justify-center mb-6">
+              <img
+                src={imagemSelecionada}
+                alt="Trabalho ampliado"
+                className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-4 border-cream/20"
+                loading="eager"
+              />
+            </div>
+            
+            {/* Botão WhatsApp */}
+            <div className="text-center">
               <BotaoWhatsApp mensagem={mensagensWhatsApp.galeriaSimilar}>
                 <i className="fab fa-whatsapp"></i>
                 Solicitar similar

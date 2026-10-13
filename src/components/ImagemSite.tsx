@@ -32,6 +32,7 @@ interface ImagemSiteProps {
   aspectRatio?: string;
   variant?: ImageVariant;
   objectPosition?: string;
+  fit?: ImageFit;
 }
 
 /**
@@ -45,6 +46,13 @@ const VARIANT_CONFIGS: Record<ImageVariant, { aspectRatio: string; objectPositio
   gallery: { aspectRatio: '1/1', objectPosition: 'center' },
   service: { aspectRatio: '4/5', objectPosition: 'center top' },
 };
+
+/**
+ * Modo de exibição da imagem
+ * - cover: Preenche o container, pode cortar (padrão para grids)
+ * - contain: Mostra imagem completa, sem cortar (ideal para modais)
+ */
+type ImageFit = 'cover' | 'contain';
 
 /**
  * SVG de fallback para imagens quebradas
@@ -65,6 +73,7 @@ export default function ImagemSite({
   aspectRatio,
   variant,
   objectPosition,
+  fit = 'cover',
 }: ImagemSiteProps) {
   const [erro, setErro] = useState(false);
   const [carregando, setCarregando] = useState(true);
@@ -85,10 +94,13 @@ export default function ImagemSite({
   const finalAspectRatio = aspectRatio || config?.aspectRatio;
   const finalObjectPosition = objectPosition || config?.objectPosition || 'center';
 
+  // Se fit é 'contain', não força aspect ratio para mostrar imagem completa
+  const shouldForceAspectRatio = fit === 'cover' && finalAspectRatio;
+
   return (
     <div
       className={`relative overflow-hidden bg-beige-light ${className}`}
-      style={finalAspectRatio ? { aspectRatio: finalAspectRatio } : undefined}
+      style={shouldForceAspectRatio ? { aspectRatio: finalAspectRatio } : undefined}
     >
       {/* Placeholder durante carregamento */}
       {carregando && !erro && (
@@ -107,15 +119,17 @@ export default function ImagemSite({
         loading={loading}
         onError={handleErro}
         onLoad={handleCarregado}
-        className={`w-full h-full object-cover transition-opacity duration-500 ${
+        className={`transition-opacity duration-500 ${
           carregando ? 'opacity-0' : 'opacity-100'
-        }`}
+        } ${fit === 'contain' ? 'max-w-full max-h-full w-auto h-auto' : 'w-full h-full'}`}
         style={{
-          objectFit: 'cover',
+          objectFit: fit,
           objectPosition: finalObjectPosition,
           display: 'block',
-          width: '100%',
-          height: '100%',
+          ...(fit === 'contain' 
+            ? { width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%' }
+            : { width: '100%', height: '100%' }
+          ),
         }}
       />
 
