@@ -56,17 +56,39 @@ export default function Carrossel() {
         </div>
 
         {/* Carrossel */}
-        <div className="relative">
-          {/* Container do carrossel */}
+        <div className="relative px-12 md:px-16">
+          {/* Botões de navegação - posicionados fora do container de scroll */}
+          <button
+            onClick={voltar}
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-cream hover:bg-beige text-terracotta w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+            aria-label="Imagem anterior"
+          >
+            <i className="fas fa-chevron-left text-lg md:text-xl"></i>
+          </button>
+
+          <button
+            onClick={avancar}
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-cream hover:bg-beige text-terracotta w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+            aria-label="Próxima imagem"
+          >
+            <i className="fas fa-chevron-right text-lg md:text-xl"></i>
+          </button>
+
+          {/* Container do carrossel - permite scroll no mobile */}
           <div
             ref={carrosselRef}
-            className="flex gap-4 overflow-x-hidden scroll-smooth"
-            style={{ scrollSnapType: 'x mandatory' }}
+            className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth pb-4 -mx-2 px-2"
+            style={{ 
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}
           >
             {carrosselImages.map((imagem, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-[280px] md:w-[320px] cursor-pointer group"
+                className="flex-shrink-0 w-[200px] sm:w-[240px] md:w-[280px] lg:w-[320px] cursor-pointer group"
                 style={{ scrollSnapAlign: 'start' }}
                 onClick={() => setImagemSelecionada(imagem.src)}
               >
@@ -77,33 +99,16 @@ export default function Carrossel() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   {/* Overlay no hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-brown/80 via-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-brown/80 via-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 md:p-6">
                     <div className="text-white">
-                      <p className="font-serif text-lg font-semibold mb-2">{imagem.alt}</p>
-                      <p className="text-sm opacity-90">Clique para ver detalhes</p>
+                      <p className="font-serif text-sm md:text-lg font-semibold mb-1 md:mb-2">{imagem.alt}</p>
+                      <p className="text-xs md:text-sm opacity-90">Clique para ver detalhes</p>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Botões de navegação */}
-          <button
-            onClick={voltar}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 bg-cream hover:bg-beige text-terracotta w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
-            aria-label="Imagem anterior"
-          >
-            <i className="fas fa-chevron-left text-xl"></i>
-          </button>
-
-          <button
-            onClick={avancar}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 bg-cream hover:bg-beige text-terracotta w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
-            aria-label="Próxima imagem"
-          >
-            <i className="fas fa-chevron-right text-xl"></i>
-          </button>
         </div>
 
         {/* Indicadores */}
