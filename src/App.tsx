@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ImagemSite from './components/ImagemSite';
 import StatusAtualizacao from './components/StatusAtualizacao';
+import Carrossel from './components/Carrossel';
 import {
   heroImage,
   aboutImage,
@@ -790,6 +791,7 @@ export default function App() {
       <Sobre />
       <Servicos />
       <Galeria />
+      <Carrossel />
       <ComoFunciona />
       <Depoimentos />
       <FAQ />
