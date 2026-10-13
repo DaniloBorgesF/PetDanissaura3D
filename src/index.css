@@ -21,6 +21,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -29,7 +30,21 @@ body {
   color: var(--color-brown);
   overflow-x: hidden;
   width: 100%;
+  max-width: 100vw;
   position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Garantir que nenhum elemento cause scroll horizontal */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .font-serif {
