@@ -130,6 +130,10 @@ export const galleryImages = [
     src: getImagemUrl('829356945_18106231076217188_4110392735769196189_n.webp'),
     alt: 'Trabalho artístico personalizado',
   },
+  {
+    src: getImagemUrl('829941205_18106232018217188_2467034419591609220_n.webp'),
+    alt: 'Pintura artística de pet',
+  },
 ];
 
 // ------------------------------------------------------------
